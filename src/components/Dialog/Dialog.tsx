@@ -8,6 +8,7 @@ import { DialogHeader } from './';
 import { AppInstallationParameters } from '../ConfigScreen/';
 import { ImageGallery } from '../Gallery/';
 import { SourceSelect } from '../SourceSelect/';
+import { ImageUpLoader } from '../ImageUpload/ImageUploader'
 import { Note } from '../Note/';
 import {
   IxError,
@@ -355,7 +356,8 @@ export default class Dialog extends Component<DialogProps, DialogState> {
             allSources={allSources}
             setSource={this.setSelectedSource}
             resetErrors={() => this.resetNErrors(this.state.errors.length)}
-          />
+          />   
+          <ImageUpLoader/>
           {this.state.selectedSource.id && (
             <Form className="ix-searchForm">
               <TextInput
