@@ -27,6 +27,8 @@ import packageJson from './../../../package.json';
 export interface AppInstallationParameters {
   imgixAPIKey?: string;
   successfullyVerified?: boolean;
+  s3AccessKey?: string;
+  s3SecretKey?: string;
 }
 
 interface CompatibleField {
@@ -85,6 +87,7 @@ export default class Config extends Component<ConfigProps, ConfigState> {
       // the loading screen and present the app to a user.
       this.props.sdk.app.setReady();
     });
+
   }
 
   /**
@@ -204,10 +207,29 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     this.setState({
       parameters: {
+        ... this.state.parameters,
         imgixAPIKey: e.target.value,
         successfullyVerified: this.state.parameters.successfullyVerified,
       },
     });
+  };
+
+  handleChangeBucketAccess = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    this.setState({
+     parameters:{
+        ... this.state.parameters,
+        s3AccessKey: e.target.value
+     }
+    })
+  };
+
+  handleChangeBucketSecret = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    this.setState({
+      parameters:{
+        ... this.state.parameters,
+        s3SecretKey: e.target.value
+      }
+    })
   };
 
   verifyAPIKey = async () => {
@@ -378,29 +400,6 @@ export default class Config extends Component<ConfigProps, ConfigState> {
               </a>
             </p>
           </div>
-
-          <Heading>
-            S3 Bucket credentials for image uploading
-          </Heading>
-          <Paragraph>
-              After filling in S3 Bucket credentials, complete set up by pressing{' '}
-              <code className="ix-config-description-blue-buttons">
-                Install
-              </code>{' '}
-              or{' '}
-              <code className="ix-config-description-blue-buttons">Save</code>{' '}
-              in the top right hand corner of the screen.
-          </Paragraph>
-          <TextField
-                  name="S3 Access Key" id={'S3AccessKey'} labelText={'S3 Access Key'}            />
-          <TextField
-                  name="S3 Secret Key" id={'S3SecretKey'} 
-                  labelText={'S3 Secret Key'} 
-                  textInputProps={{
-                    type: 'password',
-                    autoComplete: 'new-secret-key',
-                  }}           />
-                  
           <Button
             type="submit"
             buttonType="positive"
@@ -410,6 +409,34 @@ export default class Config extends Component<ConfigProps, ConfigState> {
           >
             Verify
           </Button>
+          <Heading>
+          Credentials for S3 Bucket linked to imgix source for image uploading
+          </Heading>
+          <Paragraph>
+              After filling in S3 Bucket credentials, complete set up by pressing{' '}
+              <code className="ix-config-description-blue-buttons">
+                Install
+              </code>{' '}
+                or{' '}
+              <code className="ix-config-description-blue-buttons">Save</code>{' '}
+              in the top right hand corner of the screen.
+          </Paragraph>
+          <TextField
+                  name="S3 Access Key" id={'S3AccessKey'}
+                  labelText={'S3 Access Key'}
+                  value={this.state.parameters?.s3AccessKey || ''}
+                  onChange={this.handleChangeBucketAccess}
+                  />
+          <TextField
+                  name="S3 Secret Key" id={'S3SecretKey'} 
+                  labelText={'S3 Secret Key'} 
+                  value={this.state.parameters?.s3SecretKey || ''}
+                  textInputProps={{
+                    type: 'password',
+                    autoComplete: 'new-secret-key',
+                  }}          
+                  onChange={this.handleChangeBucketSecret}
+                   />
           {this.state.contentTypes.length > 0 && (
             <div>
               <hr></hr>
