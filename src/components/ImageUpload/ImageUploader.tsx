@@ -10,7 +10,7 @@ import {
 
 import { SourceProps } from '../Dialog';
 
-export function ImageUpLoader({}): ReactElement {
+export function ImageUpLoader(): ReactElement {
     const [isShown, setShown] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
   
@@ -32,7 +32,7 @@ export function ImageUpLoader({}): ReactElement {
   return (
     <>
         <Button onClick={()=> setShown(true)}>Or upload a new image</Button>
-        <Modal onClose={()=> setShown(false)} isShown={isShown}>
+        <Modal onClose={()=> setShown(false)} isShown={isShown} position='top'>
             {
                 ()=> (
                    <>

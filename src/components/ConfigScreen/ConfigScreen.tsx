@@ -14,6 +14,9 @@ import {
   ListItem,
   CheckboxField,
   Subheading,
+  Tabs,
+  Tab,
+  TabPanel
 } from '@contentful/forma-36-react-components';
 import ImgixAPI, { APIError } from 'imgix-management-js';
 import debounce from 'lodash.debounce';
@@ -47,6 +50,7 @@ interface ConfigState {
   validationMessage?: string;
   parameters: AppInstallationParameters;
   contentTypes: ContentType[];
+  selected: string;
 }
 
 export default class Config extends Component<ConfigProps, ConfigState> {
@@ -57,8 +61,8 @@ export default class Config extends Component<ConfigProps, ConfigState> {
       validationMessage: '',
       parameters: {},
       contentTypes: [],
+      selected: 'imgix'
     };
-
     // `onConfigure` allows to configure a callback to be
     // invoked when a user attempts to install the app or update
     // its configuration.
@@ -284,6 +288,13 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   render() {
     return (
       <Workbench className="ix-config-container">
+             <div className="ix-config-footer">
+          <img
+            className="ix-config-footerLogo"
+            src="https://assets.imgix.net/sdk-imgix-logo.svg"
+            alt="App logo"
+          />
+        </div>
         <Form className="ix-config-description">
           <Heading>Getting set up with imgix and Contentful</Heading>
           <Paragraph>
@@ -367,6 +378,29 @@ export default class Config extends Component<ConfigProps, ConfigState> {
               </a>
             </p>
           </div>
+
+          <Heading>
+            S3 Bucket credentials for image uploading
+          </Heading>
+          <Paragraph>
+              After filling in S3 Bucket credentials, complete set up by pressing{' '}
+              <code className="ix-config-description-blue-buttons">
+                Install
+              </code>{' '}
+              or{' '}
+              <code className="ix-config-description-blue-buttons">Save</code>{' '}
+              in the top right hand corner of the screen.
+          </Paragraph>
+          <TextField
+                  name="S3 Access Key" id={'S3AccessKey'} labelText={'S3 Access Key'}            />
+          <TextField
+                  name="S3 Secret Key" id={'S3SecretKey'} 
+                  labelText={'S3 Secret Key'} 
+                  textInputProps={{
+                    type: 'password',
+                    autoComplete: 'new-secret-key',
+                  }}           />
+                  
           <Button
             type="submit"
             buttonType="positive"
@@ -424,13 +458,6 @@ export default class Config extends Component<ConfigProps, ConfigState> {
             </div>
           )}
         </Form>
-        <div className="ix-config-footer">
-          <img
-            className="ix-config-footerLogo"
-            src="https://assets.imgix.net/sdk-imgix-logo.svg"
-            alt="App logo"
-          />
-        </div>
       </Workbench>
     );
   }
