@@ -357,7 +357,6 @@ export default class Dialog extends Component<DialogProps, DialogState> {
             setSource={this.setSelectedSource}
             resetErrors={() => this.resetNErrors(this.state.errors.length)}
           />   
-          <ImageUpLoader/>
           {this.state.selectedSource.id && (
             <Form className="ix-searchForm">
               <TextInput
@@ -396,7 +395,11 @@ export default class Dialog extends Component<DialogProps, DialogState> {
             resetErrorBoundary={this.resetNErrors}
           />
         )}
+         {selectedSource.id && 
+      <ImageUpLoader selectedSourceID={selectedSource.id} params={this.props.sdk.parameters.installation as AppInstallationParameters}/> 
+          }
       </div>
+     
     );
   }
 }

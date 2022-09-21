@@ -13,11 +13,9 @@ import {
   List,
   ListItem,
   CheckboxField,
-  Subheading,
-  Tabs,
-  Tab,
-  TabPanel
-} from '@contentful/forma-36-react-components';
+  Subheading
+} 
+from '@contentful/forma-36-react-components';
 import ImgixAPI, { APIError } from 'imgix-management-js';
 import debounce from 'lodash.debounce';
 
@@ -43,7 +41,7 @@ interface ContentType {
   compatibleFields: CompatibleField[];
 }
 
-interface ConfigProps {
+export interface ConfigProps {
   sdk: AppExtensionSDK;
 }
 
@@ -207,7 +205,7 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     this.setState({
       parameters: {
-        ... this.state.parameters,
+        ...this.state.parameters,
         imgixAPIKey: e.target.value,
         successfullyVerified: this.state.parameters.successfullyVerified,
       },
@@ -217,7 +215,7 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   handleChangeBucketAccess = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     this.setState({
      parameters:{
-        ... this.state.parameters,
+        ...this.state.parameters,
         s3AccessKey: e.target.value
      }
     })
@@ -226,7 +224,7 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   handleChangeBucketSecret = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     this.setState({
       parameters:{
-        ... this.state.parameters,
+        ...this.state.parameters,
         s3SecretKey: e.target.value
       }
     })
