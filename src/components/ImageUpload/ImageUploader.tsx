@@ -4,10 +4,9 @@ import {
   Button,
   Modal,
   Form,
-
+  TextField,
 } from '@contentful/forma-36-react-components';
 import { AppInstallationParameters } from '../ConfigScreen/ConfigScreen'
-import { SourceProps } from '../Dialog';
 interface Props{
     selectedSourceID: string | undefined,
     params: AppInstallationParameters
@@ -25,15 +24,13 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
         console.log(selectedSourceID)
         console.log(params)
         console.log(selectedFile?.name)
-
     }
     const submitForm = () => {
     if (selectedFile === null) {
       return;
     }
 
-    alert('Uploaded: ' + selectedFile);
-    console.log(selectedFile)
+    alert('Uploaded: ' + selectedFile?.name);
     // Upload to S3
     
      
@@ -50,8 +47,8 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
         body: selectedFile,
         redirect: 'follow',
         };
-
-        fetch(`https://api.imgix.com/api/v1/sources/${selectedSourceID}/upload/${selectedFile?.name}`, requestOptions)
+                            
+        fetch(`https://api.imgix.com/api/v1/sources/${selectedSourceID}/upload/testFolder/${selectedFile?.name}`, requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -78,6 +75,11 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
                                 <Form onSubmit={submitForm}>
                                     <input type="file" onChange={changeHandler}/>
                                 </Form>
+                                {
+                                selectedFile != null && <TextField
+                                name="IMGIX file path" id={'imgixFilePath'}
+                                labelText={'Specify a destination path'}
+                                />}
                             </Modal.Content>
                             <Modal.Controls>
                                 <Button

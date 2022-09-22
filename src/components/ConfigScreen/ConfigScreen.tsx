@@ -13,7 +13,9 @@ import {
   List,
   ListItem,
   CheckboxField,
-  Subheading
+  Subheading,
+  Card,
+  Textarea
 } 
 from '@contentful/forma-36-react-components';
 import ImgixAPI, { APIError } from 'imgix-management-js';
@@ -410,7 +412,7 @@ export default class Config extends Component<ConfigProps, ConfigState> {
           <Heading>
           Credentials for S3 Bucket linked to imgix source for image uploading
           </Heading>
-          <Paragraph>
+          {/* <Paragraph>
               After filling in S3 Bucket credentials, complete set up by pressing{' '}
               <code className="ix-config-description-blue-buttons">
                 Install
@@ -434,7 +436,11 @@ export default class Config extends Component<ConfigProps, ConfigState> {
                     autoComplete: 'new-secret-key',
                   }}          
                   onChange={this.handleChangeBucketSecret}
-                   />
+                   /> */}
+
+            <Paragraph>
+             For instructions regarding how to register S3 bucket credentials related to your IMGIX source go to this <a href="https://docs.imgix.com/apis/management#asset-uploading-to-a-source"> link </a>
+            </Paragraph>
           {this.state.contentTypes.length > 0 && (
             <div>
               <hr></hr>
