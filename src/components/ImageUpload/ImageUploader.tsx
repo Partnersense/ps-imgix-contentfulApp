@@ -32,7 +32,7 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
         console.log(selectedFile?.name)
     }
     const submitForm = () => {
-    if (selectedFile === null) {
+    if (selectedFile === undefined) {
       return;
     }
        Notification.setPosition('top'); 
@@ -50,7 +50,7 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
                             
         fetch(`https://api.imgix.com/api/v1/sources/${selectedSourceID}/upload/${imageFolderName !== undefined || imageFolderName !== "" ? imageFolderName + "/" : ""}${selectedFile?.name}`, requestOptions)
         .then(response => response.text())
-        .then(result => result.includes("errors") ?  Notification.error(result) : Notification.success("Successfull upload !"))
+        .then(result => result.includes("errors") ?  Notification.error(result) : Notification.success("Successful upload !"))
         .catch(error => Notification.error(error))
         .finally(()=> setShown(false));
       
