@@ -84,7 +84,7 @@ export default class Dialog extends Component<DialogProps, DialogState> {
       searchTerm: '',
       assets: [],
       errors: [],
-      isSearching: false,
+      isSearching: false    
     };
   }
 
@@ -394,9 +394,10 @@ export default class Dialog extends Component<DialogProps, DialogState> {
             type={this.state.errors[0].type}
             resetErrorBoundary={this.resetNErrors}
           />
+          
         )}
          {selectedSource.id && 
-      <ImageUpLoader selectedSourceID={selectedSource.id} params={this.props.sdk.parameters.installation as AppInstallationParameters}/> 
+      <ImageUpLoader selectedSourceID={selectedSource.id} params={this.props.sdk.parameters.installation as AppInstallationParameters} refresh={this.requestImageUrls}/> 
           }
       </div>
      

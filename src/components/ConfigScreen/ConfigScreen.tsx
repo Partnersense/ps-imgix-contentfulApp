@@ -14,8 +14,6 @@ import {
   ListItem,
   CheckboxField,
   Subheading,
-  Card,
-  Textarea
 } 
 from '@contentful/forma-36-react-components';
 import ImgixAPI, { APIError } from 'imgix-management-js';

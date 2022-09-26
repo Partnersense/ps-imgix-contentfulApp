@@ -11,8 +11,9 @@ import { AppInstallationParameters } from '../ConfigScreen/ConfigScreen'
 interface Props{
     selectedSourceID: string | undefined,
     params: AppInstallationParameters
+    refresh: Function
 }
-export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement {
+export function ImageUpLoader( {selectedSourceID, params, refresh}: Props ): ReactElement {
     const [isShown, setShown] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File>();
     const [imageFolderName, setImageFolderName] = useState("");
@@ -26,10 +27,19 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
         setImageFolderName(e.target.value)
     }
 
-    const logParams =() =>{
+    const logParams = () => {
         console.log(selectedSourceID)
         console.log(params)
         console.log(selectedFile?.name)
+    }
+
+    const refreshing = () => {
+        refresh();
+    }
+
+    const closeModal = () => {
+        setSelectedFile(undefined)
+        setShown(false)
     }
     const submitForm = () => {
     if (selectedFile === undefined) {
@@ -48,10 +58,11 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
         redirect: 'follow',
         };
                             
-        fetch(`https://api.imgix.com/api/v1/sources/${selectedSourceID}/upload/${imageFolderName !== undefined || imageFolderName !== "" ? imageFolderName + "/" : ""}${selectedFile?.name}`, requestOptions)
+        fetch(`https://api.imgix.com/api/v1/sources/${selectedSourceID}/upload/${imageFolderName ? (imageFolderName + "/") : ""}${selectedFile?.name}`, requestOptions)
         .then(response => response.text())
         .then(result => result.includes("errors") ?  Notification.error(result) : Notification.success("Successful upload !"))
         .catch(error => Notification.error(error))
+        .then(refreshing)
         .finally(()=> setShown(false));
       
   };
@@ -76,7 +87,7 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
                                     <input type="file" onChange={changeHandler}/>
                                 </Form>
                                 {
-                                selectedFile != null && 
+                                selectedFile != undefined && 
                                 <TextField
                                 value={imageFolderName || ''}
                                 onChange={handleChange}
@@ -87,7 +98,7 @@ export function ImageUpLoader( {selectedSourceID, params}: Props ): ReactElement
                             <Modal.Controls>
                                 <Button
                                     size="small"
-                                    onClick={() => setShown(false)}
+                                    onClick={closeModal}
                                 >
                                     Close
                                 </Button>
