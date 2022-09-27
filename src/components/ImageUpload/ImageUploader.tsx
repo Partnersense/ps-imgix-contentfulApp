@@ -27,12 +27,6 @@ export function ImageUpLoader( {selectedSourceID, params, refresh}: Props ): Rea
         setImageFolderName(e.target.value)
     }
 
-    const logParams = () => {
-        console.log(selectedSourceID)
-        console.log(params)
-        console.log(selectedFile?.name)
-    }
-
     const refreshing = () => {
         refresh();
     }
@@ -46,14 +40,14 @@ export function ImageUpLoader( {selectedSourceID, params, refresh}: Props ): Rea
       return;
     }
        Notification.setPosition('top'); 
-       var myHeaders = new Headers();
-        myHeaders.append("Accept", "application/vnd.api+json");
-        myHeaders.append("Authorization", `Bearer ${params.imgixAPIKey}`);
-        myHeaders.append("Content-Type", "image/jpeg");
+       var headers = new Headers();
+        headers.append("Accept", "application/vnd.api+json");
+        headers.append("Authorization", `Bearer ${params.imgixAPIKey}`);
+        headers.append("Content-Type", "image/jpeg");
 
         var requestOptions: RequestInit = {
         method: 'POST',
-        headers: myHeaders,
+        headers: headers,
         body: selectedFile,
         redirect: 'follow',
         };
@@ -111,9 +105,6 @@ export function ImageUpLoader( {selectedSourceID, params, refresh}: Props ): Rea
                                  Upload
                              </Button>
                                 }
-                               
-                                <Button size="small" onClick={logParams}>LOG</Button>
-
                             </Modal.Controls>
                    </> 
                 )
