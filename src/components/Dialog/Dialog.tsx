@@ -8,6 +8,7 @@ import { DialogHeader } from './';
 import { AppInstallationParameters } from '../ConfigScreen/';
 import { ImageGallery } from '../Gallery/';
 import { SourceSelect } from '../SourceSelect/';
+import { ImageUpLoader } from '../ImageUpload/ImageUploader'
 import { Note } from '../Note/';
 import {
   IxError,
@@ -83,7 +84,7 @@ export default class Dialog extends Component<DialogProps, DialogState> {
       searchTerm: '',
       assets: [],
       errors: [],
-      isSearching: false,
+      isSearching: false    
     };
   }
 
@@ -355,7 +356,7 @@ export default class Dialog extends Component<DialogProps, DialogState> {
             allSources={allSources}
             setSource={this.setSelectedSource}
             resetErrors={() => this.resetNErrors(this.state.errors.length)}
-          />
+          />   
           {this.state.selectedSource.id && (
             <Form className="ix-searchForm">
               <TextInput
@@ -393,8 +394,13 @@ export default class Dialog extends Component<DialogProps, DialogState> {
             type={this.state.errors[0].type}
             resetErrorBoundary={this.resetNErrors}
           />
+          
         )}
+         {selectedSource.id && 
+      <ImageUpLoader selectedSourceID={selectedSource.id} params={this.props.sdk.parameters.installation as AppInstallationParameters} refresh={this.requestImageUrls}/> 
+          }
       </div>
+     
     );
   }
 }

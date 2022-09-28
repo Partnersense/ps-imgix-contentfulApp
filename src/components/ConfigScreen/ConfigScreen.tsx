@@ -14,7 +14,8 @@ import {
   ListItem,
   CheckboxField,
   Subheading,
-} from '@contentful/forma-36-react-components';
+} 
+from '@contentful/forma-36-react-components';
 import ImgixAPI, { APIError } from 'imgix-management-js';
 import debounce from 'lodash.debounce';
 
@@ -24,6 +25,8 @@ import packageJson from './../../../package.json';
 export interface AppInstallationParameters {
   imgixAPIKey?: string;
   successfullyVerified?: boolean;
+  s3AccessKey?: string;
+  s3SecretKey?: string;
 }
 
 interface CompatibleField {
@@ -38,7 +41,7 @@ interface ContentType {
   compatibleFields: CompatibleField[];
 }
 
-interface ConfigProps {
+export interface ConfigProps {
   sdk: AppExtensionSDK;
 }
 
@@ -47,6 +50,7 @@ interface ConfigState {
   validationMessage?: string;
   parameters: AppInstallationParameters;
   contentTypes: ContentType[];
+  selected: string;
 }
 
 export default class Config extends Component<ConfigProps, ConfigState> {
@@ -57,8 +61,8 @@ export default class Config extends Component<ConfigProps, ConfigState> {
       validationMessage: '',
       parameters: {},
       contentTypes: [],
+      selected: 'imgix'
     };
-
     // `onConfigure` allows to configure a callback to be
     // invoked when a user attempts to install the app or update
     // its configuration.
@@ -81,6 +85,7 @@ export default class Config extends Component<ConfigProps, ConfigState> {
       // the loading screen and present the app to a user.
       this.props.sdk.app.setReady();
     });
+
   }
 
   /**
@@ -200,10 +205,29 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     this.setState({
       parameters: {
+        ...this.state.parameters,
         imgixAPIKey: e.target.value,
         successfullyVerified: this.state.parameters.successfullyVerified,
       },
     });
+  };
+
+  handleChangeBucketAccess = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    this.setState({
+     parameters:{
+        ...this.state.parameters,
+        s3AccessKey: e.target.value
+     }
+    })
+  };
+
+  handleChangeBucketSecret = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    this.setState({
+      parameters:{
+        ...this.state.parameters,
+        s3SecretKey: e.target.value
+      }
+    })
   };
 
   verifyAPIKey = async () => {
@@ -284,6 +308,13 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   render() {
     return (
       <Workbench className="ix-config-container">
+             <div className="ix-config-footer">
+          <img
+            className="ix-config-footerLogo"
+            src="https://assets.imgix.net/sdk-imgix-logo.svg"
+            alt="App logo"
+          />
+        </div>
         <Form className="ix-config-description">
           <Heading>Getting set up with imgix and Contentful</Heading>
           <Paragraph>
@@ -376,6 +407,12 @@ export default class Config extends Component<ConfigProps, ConfigState> {
           >
             Verify
           </Button>
+          <Heading>
+          Credentials for S3 Bucket linked to imgix source for image uploading
+          </Heading>
+            <Paragraph>
+             For instructions regarding how to register S3 bucket credentials related to your IMGIX source go to this <a href="https://docs.imgix.com/apis/management#asset-uploading-to-a-source"> link </a>
+            </Paragraph>
           {this.state.contentTypes.length > 0 && (
             <div>
               <hr></hr>
@@ -424,13 +461,6 @@ export default class Config extends Component<ConfigProps, ConfigState> {
             </div>
           )}
         </Form>
-        <div className="ix-config-footer">
-          <img
-            className="ix-config-footerLogo"
-            src="https://assets.imgix.net/sdk-imgix-logo.svg"
-            alt="App logo"
-          />
-        </div>
       </Workbench>
     );
   }
