@@ -410,32 +410,6 @@ export default class Config extends Component<ConfigProps, ConfigState> {
           <Heading>
           Credentials for S3 Bucket linked to imgix source for image uploading
           </Heading>
-          {/* <Paragraph>
-              After filling in S3 Bucket credentials, complete set up by pressing{' '}
-              <code className="ix-config-description-blue-buttons">
-                Install
-              </code>{' '}
-                or{' '}
-              <code className="ix-config-description-blue-buttons">Save</code>{' '}
-              in the top right hand corner of the screen.
-          </Paragraph>
-          <TextField
-                  name="S3 Access Key" id={'S3AccessKey'}
-                  labelText={'S3 Access Key'}
-                  value={this.state.parameters?.s3AccessKey || ''}
-                  onChange={this.handleChangeBucketAccess}
-                  />
-          <TextField
-                  name="S3 Secret Key" id={'S3SecretKey'} 
-                  labelText={'S3 Secret Key'} 
-                  value={this.state.parameters?.s3SecretKey || ''}
-                  textInputProps={{
-                    type: 'password',
-                    autoComplete: 'new-secret-key',
-                  }}          
-                  onChange={this.handleChangeBucketSecret}
-                   /> */}
-
             <Paragraph>
              For instructions regarding how to register S3 bucket credentials related to your IMGIX source go to this <a href="https://docs.imgix.com/apis/management#asset-uploading-to-a-source"> link </a>
             </Paragraph>
