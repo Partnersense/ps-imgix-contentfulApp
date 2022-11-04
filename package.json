@@ -5,6 +5,7 @@
   "author": "imgix SDK team <sdk@imgix.com>",
   "private": false,
   "license": "BSD-2-Clause",
+  "homepage": ".",
   "repository": {
     "type": "git",
     "url": "https://github.com/imgix/contentful"

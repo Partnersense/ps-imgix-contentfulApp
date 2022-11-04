@@ -6,7 +6,6 @@ import { ImageSelectButton } from '../ImageSelect/ImageSelect';
 import { GridImage, ImagePlaceholder, ImagePagination } from './';
 
 import './ImageGallery.css';
-import { Button } from '@contentful/forma-36-react-components';
 
 interface GalleryProps {
   selectedSource: Partial<SourceProps>;
