@@ -81,7 +81,7 @@ export function ImageUpLoader( {selectedSourceID, params, refresh}: Props ): Rea
                                     <input type="file" onChange={changeHandler}/>
                                 </Form>
                                 {
-                                selectedFile != undefined && 
+                                selectedFile !== undefined && 
                                 <TextField
                                 value={imageFolderName || ''}
                                 onChange={handleChange}
